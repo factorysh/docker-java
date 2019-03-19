@@ -12,5 +12,5 @@ java:
 push:
 	docker push bearstech/java:latest
 
-test:
+tests:
 	@echo 'ok'
