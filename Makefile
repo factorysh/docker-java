@@ -16,3 +16,6 @@ push:
 
 tests:
 	@echo 'ok'
+
+down:
+	@echo 'ok'
