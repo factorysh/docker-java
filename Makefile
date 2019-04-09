@@ -5,9 +5,7 @@ all: | pull build
 pull:
 	docker pull bearstech/debian:stretch
 
-build: java
-
-java:
+build:
 	docker build \
 		--build-arg GIT_VERSION=${GIT_VERSION} \
 		-t bearstech/java:latest \
