@@ -9,3 +9,5 @@ RUN set -eux \
                     openjdk-8-jre-headless \
     &&  apt-get clean \
     &&  rm -rf /var/lib/apt/lists/* \
+ARG GIT_VERSION
+LABEL com.bearstech.source.java=https://github.com/factorysh/docker-java/commit/${GIT_VERSION}
