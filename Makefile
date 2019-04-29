@@ -16,7 +16,7 @@ build-java:
 
 build-gradle:
 	docker build \
-		-t bearstech/gradle:latest \
+		-t bearstech/java-gradle:latest \
 		-f Dockerfile.gradle \
 		.
 	docker tag bearstech/java-gradle:latest bearstech/java-gradle:5
