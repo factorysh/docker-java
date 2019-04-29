@@ -1,0 +1,16 @@
+FROM bearstech/java:1.8
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV GRADLE_VERSION=5.4.1
+WORKDIR /opt/gradle
+RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
+    && wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip.sha256 \
+    && echo "$(cat gradle-${GRADLE_VERSION}-bin.zip.sha256)  gradle-${GRADLE_VERSION}-bin.zip" | sha256sum --check \
+    && unzip gradle-${GRADLE_VERSION}-bin.zip \
+    && rm gradle-${GRADLE_VERSION}-bin.zip gradle-${GRADLE_VERSION}-bin.zip.sha256 \
+    && ln -s /opt/gradle/gradle-${GRADLE_VERSION}/bin/* /usr/local/bin
