@@ -7,8 +7,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 ENV GRADLE_VERSION=5.4.1
-RUN mkdir -p /opt/gradle && cd /opt/gradle \
-    && wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
+WORKDIR /opt/gradle
+RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
     && wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip.sha256 \
     && echo "$(cat gradle-${GRADLE_VERSION}-bin.zip.sha256)  gradle-${GRADLE_VERSION}-bin.zip" | sha256sum --check \
     && unzip gradle-${GRADLE_VERSION}-bin.zip \
