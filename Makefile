@@ -17,6 +17,7 @@ build-java-1.8:
 		--build-arg jdkjre=jre \
 		-t bearstech/java:1.8 \
 		.
+	docker tag bearstech/java:1.8 bearstech/java:8
 
 build-java-dev-1.8:
 	docker build \
@@ -24,7 +25,8 @@ build-java-dev-1.8:
 		--build-arg jdkjre=jdk \
 		-t bearstech/java-dev:1.8 \
 		.
-	docker tag bearstech/java-dev:1.8 bearstech/java-jdk:1.8
+	docker tag bearstech/java-dev:1.8 bearstech/java-jdk:1.8 \
+		bearstech/java-dev:8 bearstech/java-jdk:8
 
 build-java-11:
 	docker build \
