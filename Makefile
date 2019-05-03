@@ -25,8 +25,9 @@ build-java-dev-1.8:
 		--build-arg jdkjre=jdk \
 		-t bearstech/java-dev:1.8 \
 		.
-	docker tag bearstech/java-dev:1.8 bearstech/java-jdk:1.8 \
-		bearstech/java-dev:8 bearstech/java-jdk:8
+	docker tag bearstech/java-dev:1.8 bearstech/java-jdk:1.8
+	docker tag bearstech/java-dev:1.8 bearstech/java-dev:8
+	docker tag bearstech/java-dev:1.8 bearstech/java-jdk:8
 
 build-java-11:
 	docker build \
@@ -44,18 +45,18 @@ build-java-dev-11:
 		-t bearstech/java-dev:11 \
 		-f Dockerfile.11 \
 		.
-	docker tag bearstech/java-dev:11 bearstech/java-dev:latest \
-		bearstech/java-jdk:11 bearstech/java-jdk:latest
+	docker tag bearstech/java-dev:11 bearstech/java-dev:latest
+	docker tag bearstech/java-dev:11 bearstech/java-jdk:latest
+	docker tag bearstech/java-dev:11 bearstech/java-jdk:11
 
 build-gradle: build-gradle-1.8 build-gradle-11
 
 build-gradle-1.8:
 	docker build \
 		--build-arg java_version=1.8 \
-		-t bearstech/java-gradle:latest \
+		-t bearstech/java-gradle:8 \
 		-f Dockerfile.gradle \
 		.
-	docker tag bearstech/java-gradle:latest bearstech/java-gradle:5
 
 build-gradle-11:
 	docker build \
@@ -63,6 +64,7 @@ build-gradle-11:
 		-t bearstech/java-gradle:11 \
 		-f Dockerfile.gradle \
 		.
+	docker tag bearstech/java-gradle:11 bearstech/java-gradle:latest
 
 push:
 	docker push bearstech/java:latest
