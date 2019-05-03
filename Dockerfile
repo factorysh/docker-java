@@ -11,6 +11,8 @@ RUN set -eux \
     &&  apt-get clean \
     &&  rm -rf /var/lib/apt/lists/*
 
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+
 ARG GIT_VERSION
 LABEL com.bearstech.source.java=https://github.com/factorysh/docker-java/commit/${GIT_VERSION}
 
