@@ -1,3 +1,4 @@
+GOSS_VERSION := 0.3.6
 GIT_VERSION := $(shell git rev-parse HEAD)
 
 all: | pull build
@@ -83,8 +84,37 @@ push:
 	docker push bearstech/java-gradle:8
 	docker push bearstech/java-gradle:latest
 
-tests:
-	@echo 'ok'
+bin:
+	mkdir -p bin
+
+bin/goss: bin
+	curl -o bin/goss -L https://github.com/aelsabbahy/goss/releases/download/v${GOSS_VERSION}/goss-linux-amd64
+	chmod +x bin/goss
+
+tests-java: bin/goss
+	for version in 8 11; do \
+		for a in java:$$version java-jdk:$$version java-gradle:$$version ; do \
+			echo "testing $$a"; \
+			docker run --rm \
+			-v `pwd`/bin/goss:/usr/local/bin/goss:ro \
+			-v `pwd`/tests:/tests:ro \
+			-w /tests \
+			bearstech/$$a \
+			goss --vars=vars_$${version}.yml -g java.yml validate; \
+		done ; \
+	done
+
+tests-gradle: bin/goss
+	for version in 8 11; do \
+		docker run --rm \
+		-v `pwd`/bin/goss:/usr/local/bin/goss:ro \
+		-v `pwd`/tests:/tests:ro \
+		-w /tests \
+		bearstech/java-gradle:$$version \
+		goss -g gradle.yml validate; \
+	done
+
+tests: tests-java tests-gradle
 
 down:
 	@echo 'ok'
