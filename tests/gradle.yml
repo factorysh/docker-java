@@ -1,0 +1,8 @@
+---
+
+command:
+  "gradle -version":
+    exit-status: 0
+    stdout:
+      - >-
+        /Gradle 5\.\d+\.\d+/
