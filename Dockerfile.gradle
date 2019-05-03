@@ -1,5 +1,5 @@
 ARG java_version
-FROM bearstech/java:${java_version}
+FROM bearstech/java-dev:${java_version}
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 

@@ -5,23 +5,45 @@ all: | pull build
 pull:
 	docker pull bearstech/debian:stretch
 
-build: | build-java build-gradle
+build: | build-java build-dev build-gradle
+
+build-dev: build-java-dev-1.8 build-java-dev-11
 
 build-java: build-java-1.8 build-java-11
 
 build-java-1.8:
 	docker build \
 		--build-arg GIT_VERSION=${GIT_VERSION} \
-		-t bearstech/java:latest \
+		--build-arg jdkjre=jre \
+		-t bearstech/java:1.8 \
 		.
-	docker tag bearstech/java:latest bearstech/java:1.8
+
+build-java-dev-1.8:
+	docker build \
+		--build-arg GIT_VERSION=${GIT_VERSION} \
+		--build-arg jdkjre=jdk \
+		-t bearstech/java-dev:1.8 \
+		.
+	docker tag bearstech/java-dev:1.8 bearstech/java-jdk:1.8
 
 build-java-11:
 	docker build \
 		--build-arg GIT_VERSION=${GIT_VERSION} \
+		--build-arg jdkjre=jre \
 		-t bearstech/java:11 \
 		-f Dockerfile.11 \
 		.
+	docker tag bearstech/java:11 bearstech/java:latest
+
+build-java-dev-11:
+	docker build \
+		--build-arg GIT_VERSION=${GIT_VERSION} \
+		--build-arg jdkjre=jdk \
+		-t bearstech/java-dev:11 \
+		-f Dockerfile.11 \
+		.
+	docker tag bearstech/java-dev:11 bearstech/java-dev:latest \
+		bearstech/java-jdk:11 bearstech/java-jdk:latest
 
 build-gradle: build-gradle-1.8 build-gradle-11
 
