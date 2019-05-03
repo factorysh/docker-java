@@ -67,10 +67,21 @@ build-gradle-11:
 	docker tag bearstech/java-gradle:11 bearstech/java-gradle:latest
 
 push:
-	docker push bearstech/java:latest
 	docker push bearstech/java:1.8
+	docker push bearstech/java:8
+	docker push bearstech/java:11
+	docker push bearstech/java:latest
+	docker push bearstech/java-jdk:1.8
+	docker push bearstech/java-jdk:8
+	docker push bearstech/java-jdk:11
+	docker push bearstech/java-jdk:latest
+	docker push bearstech/java-dev:1.8
+	docker push bearstech/java-dev:8
+	docker push bearstech/java-dev:11
+	docker push bearstech/java-dev:latest
+	docker push bearstech/java-gradle:11
+	docker push bearstech/java-gradle:8
 	docker push bearstech/java-gradle:latest
-	docker push bearstech/java-gradle:5
 
 tests:
 	@echo 'ok'
