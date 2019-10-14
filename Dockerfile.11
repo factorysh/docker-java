@@ -12,5 +12,18 @@ RUN echo "deb http://deb.debian.org/debian stretch-backports main" > /etc/apt/so
 
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
+# generated labels
+
 ARG GIT_VERSION
-LABEL com.bearstech.source.java=https://github.com/factorysh/docker-java/commit/${GIT_VERSION}
+ARG GIT_DATE
+ARG BUILD_DATE
+
+LABEL com.bearstech.image.revision_date=${GIT_DATE}
+
+LABEL org.opencontainers.image.authors=Bearstech
+
+LABEL org.opencontainers.image.revision=${GIT_VERSION}
+LABEL org.opencontainers.image.created=${BUILD_DATE}
+
+LABEL org.opencontainers.image.url=https://github.com/factorysh/docker-java
+LABEL org.opencontainers.image.source=https://github.com/factorysh/docker-java/blob/${GIT_VERSION}/Dockerfile.11
