@@ -17,3 +17,19 @@ RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.
     && rm gradle-${GRADLE_VERSION}-bin.zip gradle-${GRADLE_VERSION}-bin.zip.sha256 \
     && mv gradle-${GRADLE_VERSION} ${GRADLE_HOME} \
     && ln -s /opt/gradle/bin/gradle /usr/local/bin/gradle
+
+# generated labels
+
+ARG GIT_VERSION
+ARG GIT_DATE
+ARG BUILD_DATE
+
+LABEL com.bearstech.image.revision_date=${GIT_DATE}
+
+LABEL org.opencontainers.image.authors=Bearstech
+
+LABEL org.opencontainers.image.revision=${GIT_VERSION}
+LABEL org.opencontainers.image.created=${BUILD_DATE}
+
+LABEL org.opencontainers.image.url=https://github.com/factorysh/docker-java
+LABEL org.opencontainers.image.source=https://github.com/factorysh/docker-java/blob/${GIT_VERSION}/Dockerfile.gradle
