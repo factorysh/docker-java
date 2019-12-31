@@ -1,11 +1,11 @@
-FROM bearstech/debian:stretch
+FROM bearstech/debian:buster
 
 ENV DEBIAN_FRONTEND noninteractive
 
 ARG jdkjre=jre
-RUN echo "deb http://deb.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/backport.list \
+RUN set -eux \
     && apt-get update \
-    && apt-get -t stretch-backports install  -y --no-install-recommends \
+    &&  apt-get install -y --no-install-recommends \
             openjdk-11-${jdkjre}-headless \
     &&  apt-get clean \
     &&  rm -rf /var/lib/apt/lists/*
