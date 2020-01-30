@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ARG jdkjre=jre
 # we need openjdk
 RUN set -eux \
+    &&  export http_proxy=${HTTP_PROXY} \
     &&  apt-get update \
     &&  apt-get install -y --no-install-recommends \
                     openjdk-8-${jdkjre}-headless \
