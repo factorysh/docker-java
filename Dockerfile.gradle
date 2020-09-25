@@ -9,7 +9,7 @@ RUN set -eux \
     &&  apt-get install -y --no-install-recommends wget unzip \
     &&  rm -rf /var/lib/apt/lists/*
 
-ENV GRADLE_VERSION=5.4.1
+ARG GRADLE_VERSION=5.4.1
 ENV GRADLE_HOME /opt/gradle
 
 RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
@@ -32,4 +32,5 @@ LABEL \
     org.opencontainers.image.revision=${GIT_VERSION} \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.url=https://github.com/factorysh/docker-java \
-    org.opencontainers.image.source=https://github.com/factorysh/docker-java/blob/${GIT_VERSION}/Dockerfile.gradle
+    org.opencontainers.image.source=https://github.com/factorysh/docker-java/blob/${GIT_VERSION}/Dockerfile.gradle \
+    org.gradle.version=${GRADLE_VERSION}

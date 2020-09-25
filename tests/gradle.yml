@@ -5,4 +5,4 @@ command:
     exit-status: 0
     stdout:
       - >-
-        /Gradle 5\.\d+\.\d+/
+        /Gradle 6\.\d+\.\d+/

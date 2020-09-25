@@ -3,6 +3,7 @@ include Makefile.lint
 include Makefile.build_args
 
 GOSS_VERSION := 0.3.6
+GRADLE_VERSION := 6.6.1
 
 all: | pull build
 
@@ -59,6 +60,7 @@ build-gradle-1.8:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
 		--build-arg java_version=1.8 \
+		--build-arg GRADLE_VERSION=${GRADLE_VERSION} \
 		-t bearstech/java-gradle:8 \
 		-f Dockerfile.gradle \
 		.
@@ -67,6 +69,7 @@ build-gradle-11:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
 		--build-arg java_version=11 \
+		--build-arg GRADLE_VERSION=${GRADLE_VERSION} \
 		-t bearstech/java-gradle:11 \
 		-f Dockerfile.gradle \
 		.
