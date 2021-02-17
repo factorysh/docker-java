@@ -28,4 +28,5 @@ RUN curl https://download.clojure.org/install/clojure-tools-${VERSION}.tar.gz | 
 
     && install -Dm644 clojure-tools/clojure.1 "$man_dir/clojure.1" \
     && install -Dm644 clojure-tools/clj.1 "$man_dir/clj.1" \
-    && rm -rf clojure-tools
+    && rm -rf clojure-tools \
+    && clojure -h
