@@ -4,13 +4,14 @@ include Makefile.build_args
 
 GOSS_VERSION := 0.3.6
 GRADLE_VERSION := 6.6.1
+CLOJURE_VERSION := 1.10.2.774
 
 all: | pull build
 
 pull:
 	docker pull bearstech/debian:stretch
 
-build: | build-java build-dev build-gradle
+build: | build-java build-dev build-gradle build-clojure
 
 build-dev: build-java-dev-1.8 build-java-dev-11
 
@@ -75,6 +76,16 @@ build-gradle-11:
 		.
 	docker tag bearstech/java-gradle:11 bearstech/java-gradle:latest
 
+build-clojure:
+	 docker build \
+		$(DOCKER_BUILD_ARGS) \
+		--build-arg java_version=11 \
+		--build-arg VERSION=${CLOJURE_VERSION} \
+		-t bearstech/java-clojure-dev:11 \
+		-f Dockerfile.clojure \
+		.
+	docker tag bearstech/java-clojure-dev:11 bearstech/java-clojure-dev:latest
+
 push:
 	docker push bearstech/java:1.8
 	docker push bearstech/java:8
@@ -91,6 +102,8 @@ push:
 	docker push bearstech/java-gradle:11
 	docker push bearstech/java-gradle:8
 	docker push bearstech/java-gradle:latest
+	docker push bearstech/java-clojure-dev:11
+	docker push bearstech/java-clojure-dev:latest
 
 bin:
 	mkdir -p bin
