@@ -2,8 +2,8 @@
 include Makefile.lint
 include Makefile.build_args
 
-GOSS_VERSION := 0.3.6
-GRADLE_VERSION := 6.6.1
+GOSS_VERSION := 0.3.16
+GRADLE_VERSION := 6.8.2
 CLOJURE_VERSION := 1.10.2.774
 
 all: | pull build
