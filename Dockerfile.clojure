@@ -11,6 +11,8 @@ RUN set -eux \
     &&  rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 RUN curl https://download.clojure.org/install/clojure-tools-${VERSION}.tar.gz | tar -xz \
     && export prefix_dir="/usr/local" \
     && export lib_dir="$prefix_dir/lib" \
