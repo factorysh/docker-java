@@ -1,0 +1,34 @@
+FROM bearstech/java-dev:11
+
+ARG VERSION=1.10.2.774
+
+RUN set -eux \
+        #&&  export http_proxy=${HTTP_PROXY} \
+    &&  apt-get update \
+    &&  apt-get install -y --no-install-recommends \
+        curl \
+        rlwrap \
+    &&  rm -rf /var/lib/apt/lists/*
+
+WORKDIR /usr/src
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN curl https://download.clojure.org/install/clojure-tools-${VERSION}.tar.gz | tar -xz \
+    && export prefix_dir="/usr/local" \
+    && export lib_dir="$prefix_dir/lib" \
+    && bin_dir="$prefix_dir/bin" \
+    && man_dir="$prefix_dir/share/man/man1" \
+    && clojure_lib_dir="$lib_dir/clojure" \
+    && install -Dm644 clojure-tools/deps.edn "$clojure_lib_dir/deps.edn" \
+    && install -Dm644 clojure-tools/example-deps.edn "$clojure_lib_dir/example-deps.edn" \
+    && install -Dm644 clojure-tools/exec.jar "$clojure_lib_dir/libexec/exec.jar" \
+    && install -Dm644 clojure-tools/clojure-tools-${VERSION}.jar "$clojure_lib_dir/libexec/clojure-tools-${VERSION}.jar" \
+
+    && sed -i -e 's@PREFIX@'"$clojure_lib_dir"'@g' clojure-tools/clojure \
+    && install -Dm755 clojure-tools/clojure "$bin_dir/clojure" \
+    && install -Dm755 clojure-tools/clj "$bin_dir/clj" \
+
+    && install -Dm644 clojure-tools/clojure.1 "$man_dir/clojure.1" \
+    && install -Dm644 clojure-tools/clj.1 "$man_dir/clj.1" \
+    && rm -rf clojure-tools \
+    && clojure -h
