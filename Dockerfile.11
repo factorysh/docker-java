@@ -1,4 +1,4 @@
-FROM bearstech/debian:buster
+FROM bearstech/debian:bullseye
 
 ENV DEBIAN_FRONTEND noninteractive
 
