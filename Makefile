@@ -13,9 +13,9 @@ pull:
 
 build: | build-java build-dev build-gradle build-clojure
 
-build-dev: build-java-dev-1.8 build-java-dev-11
+build-dev: build-java-dev-1.8 build-java-dev-11 build-java-dev-17
 
-build-java: build-java-1.8 build-java-11
+build-java: build-java-1.8 build-java-11 build-java-17
 
 build-java-1.8:
 	 docker build \
@@ -42,7 +42,6 @@ build-java-11:
 		-t bearstech/java:11 \
 		-f Dockerfile.bullseye \
 		.
-	docker tag bearstech/java:11 bearstech/java:latest
 
 build-java-dev-11:
 	 docker build \
@@ -51,11 +50,31 @@ build-java-dev-11:
 		-t bearstech/java-dev:11 \
 		-f Dockerfile.bullseye \
 		.
-	docker tag bearstech/java-dev:11 bearstech/java-dev:latest
-	docker tag bearstech/java-dev:11 bearstech/java-jdk:latest
 	docker tag bearstech/java-dev:11 bearstech/java-jdk:11
 
-build-gradle: build-gradle-1.8 build-gradle-11
+build-java-17:
+	 docker build \
+		$(DOCKER_BUILD_ARGS) \
+		--build-arg jdkjre=jre \
+		--build-arg version=17 \
+		-t bearstech/java:17 \
+		-f Dockerfile.bullseye \
+		.
+	docker tag bearstech/java:17 bearstech/java:latest
+
+build-java-dev-17:
+	 docker build \
+		$(DOCKER_BUILD_ARGS) \
+		--build-arg jdkjre=jdk \
+		--build-arg version=17 \
+		-t bearstech/java-dev:17 \
+		-f Dockerfile.bullseye \
+		.
+	docker tag bearstech/java-dev:17 bearstech/java-dev:latest
+	docker tag bearstech/java-dev:17 bearstech/java-jdk:latest
+	docker tag bearstech/java-dev:17 bearstech/java-jdk:17
+
+build-gradle: build-gradle-1.8 build-gradle-11 build-gradle-17
 
 build-gradle-1.8:
 	 docker build \
@@ -74,7 +93,16 @@ build-gradle-11:
 		-t bearstech/java-gradle:11 \
 		-f Dockerfile.gradle \
 		.
-	docker tag bearstech/java-gradle:11 bearstech/java-gradle:latest
+
+build-gradle-17:
+	 docker build \
+		$(DOCKER_BUILD_ARGS) \
+		--build-arg java_version=17 \
+		--build-arg GRADLE_VERSION=${GRADLE_VERSION} \
+		-t bearstech/java-gradle:17 \
+		-f Dockerfile.gradle \
+		.
+	docker tag bearstech/java-gradle:17 bearstech/java-gradle:latest
 
 build-clojure:
 	 docker build \
@@ -90,17 +118,21 @@ push:
 	docker push bearstech/java:1.8
 	docker push bearstech/java:8
 	docker push bearstech/java:11
+	docker push bearstech/java:17
 	docker push bearstech/java:latest
 	docker push bearstech/java-jdk:1.8
 	docker push bearstech/java-jdk:8
 	docker push bearstech/java-jdk:11
+	docker push bearstech/java-jdk:17
 	docker push bearstech/java-jdk:latest
 	docker push bearstech/java-dev:1.8
 	docker push bearstech/java-dev:8
 	docker push bearstech/java-dev:11
+	docker push bearstech/java-dev:17
 	docker push bearstech/java-dev:latest
-	docker push bearstech/java-gradle:11
 	docker push bearstech/java-gradle:8
+	docker push bearstech/java-gradle:11
+	docker push bearstech/java-gradle:17
 	docker push bearstech/java-gradle:latest
 	docker push bearstech/java-clojure-dev:11
 	docker push bearstech/java-clojure-dev:latest
@@ -113,7 +145,7 @@ bin/goss: bin
 	chmod +x bin/goss
 
 tests-java: bin/goss
-	for version in 8 11; do \
+	for version in 8 11 17; do \
 		for a in java:$$version java-jdk:$$version java-gradle:$$version ; do \
 			echo "testing $$a"; \
 			docker run --rm \
@@ -126,7 +158,7 @@ tests-java: bin/goss
 	done
 
 tests-gradle: bin/goss
-	for version in 8 11; do \
+	for version in 8 11 17; do \
 		docker run --rm \
 		-v `pwd`/bin/goss:/usr/local/bin/goss:ro \
 		-v `pwd`/tests:/tests:ro \
