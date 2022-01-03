@@ -40,7 +40,7 @@ build-java-11:
 		$(DOCKER_BUILD_ARGS) \
 		--build-arg jdkjre=jre \
 		-t bearstech/java:11 \
-		-f Dockerfile.11 \
+		-f Dockerfile.bullseye \
 		.
 	docker tag bearstech/java:11 bearstech/java:latest
 
@@ -49,7 +49,7 @@ build-java-dev-11:
 		$(DOCKER_BUILD_ARGS) \
 		--build-arg jdkjre=jdk \
 		-t bearstech/java-dev:11 \
-		-f Dockerfile.11 \
+		-f Dockerfile.bullseye \
 		.
 	docker tag bearstech/java-dev:11 bearstech/java-dev:latest
 	docker tag bearstech/java-dev:11 bearstech/java-jdk:latest
