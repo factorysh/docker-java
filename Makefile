@@ -20,7 +20,9 @@ build-java: build-java-1.8 build-java-11 build-java-17
 build-java-1.8:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
+		--build-arg debian_version=stretch \
 		--build-arg jdkjre=jre \
+		--build-arg version=8 \
 		-t bearstech/java:1.8 \
 		.
 	docker tag bearstech/java:1.8 bearstech/java:8
@@ -28,8 +30,11 @@ build-java-1.8:
 build-java-dev-1.8:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
+		--build-arg debian_version=stretch \
 		--build-arg jdkjre=jdk \
+		--build-arg version=8 \
 		-t bearstech/java-dev:1.8 \
+		-f Dockerfile \
 		.
 	docker tag bearstech/java-dev:1.8 bearstech/java-jdk:1.8
 	docker tag bearstech/java-dev:1.8 bearstech/java-dev:8
@@ -38,37 +43,41 @@ build-java-dev-1.8:
 build-java-11:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
+		--build-arg debian_version=bullseye \
 		--build-arg jdkjre=jre \
 		-t bearstech/java:11 \
-		-f Dockerfile.bullseye \
+		-f Dockerfile \
 		.
 
 build-java-dev-11:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
+		--build-arg debian_version=bullseye \
 		--build-arg jdkjre=jdk \
 		-t bearstech/java-dev:11 \
-		-f Dockerfile.bullseye \
+		-f Dockerfile \
 		.
 	docker tag bearstech/java-dev:11 bearstech/java-jdk:11
 
 build-java-17:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
+		--build-arg debian_version=bullseye \
 		--build-arg jdkjre=jre \
 		--build-arg version=17 \
 		-t bearstech/java:17 \
-		-f Dockerfile.bullseye \
+		-f Dockerfile \
 		.
 	docker tag bearstech/java:17 bearstech/java:latest
 
 build-java-dev-17:
 	 docker build \
 		$(DOCKER_BUILD_ARGS) \
+		--build-arg debian_version=bullseye \
 		--build-arg jdkjre=jdk \
 		--build-arg version=17 \
 		-t bearstech/java-dev:17 \
-		-f Dockerfile.bullseye \
+		-f Dockerfile \
 		.
 	docker tag bearstech/java-dev:17 bearstech/java-dev:latest
 	docker tag bearstech/java-dev:17 bearstech/java-jdk:latest
