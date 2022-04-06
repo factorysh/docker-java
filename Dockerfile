@@ -1,18 +1,20 @@
-FROM bearstech/debian:stretch
+ARG debian_version=bullseye
+
+FROM bearstech/debian:${debian_version}
 
 ENV DEBIAN_FRONTEND noninteractive
 
 ARG jdkjre=jre
-# we need openjdk
+ARG version=11
 RUN set -eux \
     &&  export http_proxy=${HTTP_PROXY} \
     &&  apt-get update \
     &&  apt-get install -y --no-install-recommends \
-                    openjdk-8-${jdkjre}-headless \
+            openjdk-${version}-${jdkjre}-headless \
     &&  apt-get clean \
     &&  rm -rf /var/lib/apt/lists/*
 
-ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-${version}-openjdk-amd64
 
 # generated labels
 
@@ -26,4 +28,4 @@ LABEL \
     org.opencontainers.image.revision=${GIT_VERSION} \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.url=https://github.com/factorysh/docker-java \
-    org.opencontainers.image.source=https://github.com/factorysh/docker-java/blob/${GIT_VERSION}/Dockerfile
+    org.opencontainers.image.source=https://github.com/factorysh/docker-java/blob/${GIT_VERSION}/Dockerfile.bullseye
