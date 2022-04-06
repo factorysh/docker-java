@@ -12,8 +12,8 @@ RUN set -eux \
 ARG GRADLE_VERSION=5.4.1
 ENV GRADLE_HOME /opt/gradle
 
-RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
-    && wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip.sha256 \
+RUN wget --progress=dot:giga https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
+    && wget --progress=dot:giga https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip.sha256 \
     && echo "$(cat gradle-${GRADLE_VERSION}-bin.zip.sha256)  gradle-${GRADLE_VERSION}-bin.zip" | sha256sum --check \
     && unzip gradle-${GRADLE_VERSION}-bin.zip \
     && rm gradle-${GRADLE_VERSION}-bin.zip gradle-${GRADLE_VERSION}-bin.zip.sha256 \
